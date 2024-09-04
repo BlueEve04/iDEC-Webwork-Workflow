@@ -3,7 +3,7 @@ import re
 import sys
 sys.stdout.reconfigure(encoding='utf-8')
 # 指定文件目录
-directory = './frames'  # 将此处替换为你的文件目录
+directory =r'D:\000MyFiles\CodeScope\iDEC_Frag\mainpage\BlueEve04.github.io\frames\5\5'  # 将此处替换为你的文件目录
 
 # 遍历目录中的所有文件
 for filename in os.listdir(directory):

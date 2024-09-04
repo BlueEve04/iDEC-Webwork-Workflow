@@ -1,37 +1,53 @@
 const canvas_earth = document.getElementById('gifCanvas_earth');
 const ctx = canvas_earth.getContext('2d');
+const frames1 = [];
+const frames2 = [];
+const totalFrames1 = 87; // 第一帧序列的总帧数
+const startFrame2 = 45; // 第二帧序列开始的帧号
+const endFrame2 = 73; // 第二帧序列结束的帧号
+const totalFrames2 = endFrame2 - startFrame2 + 1; // 第二帧序列的总帧数
 
-const frames = [];
-const totalFrames = 87; // 假设GIF有87帧
-for (let i = 0; i < totalFrames; i++) {
+// 加载第一帧序列
+for (let i = 0; i < totalFrames1; i++) {
     const img = new Image();
-    img.src = `frames/${i}.png`; // 假设每帧图像文件命名为 0.png, 1.png...
-    frames.push(img);
+    img.src = `frames/2/2/${i}.png`; 
+    frames1.push(img);
 }
 
-let currentFrame = 0; // 当前动画帧
-let positionX = 0; // 初始水平位置
-let positionY = 0; // 初始垂直位置
+// 加载第二帧序列
+for (let i = startFrame2; i <= endFrame2; i++) {
+    const img = new Image();
+    img.src = `frames/5/5/${i}.png`; 
+    frames2.push(img);
+}
+
+let currentFrame = 0;
+let positionX = 0;
+let positionY = 0;
 let canChangeAnime = false;
 let stopstatus = false;
+let currentFrame2 = 0; // 用于第二帧序列的动画
 
 function drawFrame(frameIndex) {
     ctx.clearRect(0, 0, canvas_earth.width, canvas_earth.height);
-    ctx.drawImage(frames[frameIndex], 0, 0, canvas_earth.width, canvas_earth.height);
+
+    // 绘制第一帧序列
+    ctx.drawImage(frames1[frameIndex], 0, 0, canvas_earth.width, canvas_earth.height);
+
+    // 绘制第二帧序列，使用 currentFrame2
+    ctx.drawImage(frames2[currentFrame2], 0, 0, canvas_earth.width, canvas_earth.height);
 }
 
 function updateCanvasPosition(scrollPositionY) {
     let transformValue = 'translate(0%, 0%)';
     if(scrollPositionY >= 200){
-        canChangeAnime=true
+        canChangeAnime=true;
     }
     if (scrollPositionY >= 1000) {
         transformValue = 'translate(120%,85%)';
-        console.log('Moved to position 1');
     }
     if (scrollPositionY >= 1500) {
         transformValue = 'translate(0%, 150%)';
-        console.log('Moved to position 2');
     }
     
     canvas_earth.style.transform = transformValue;
@@ -54,6 +70,24 @@ function isElementInCenter(elementId) {
     return Math.abs(elementCenterY - windowHeight / 2) < tolerance;
 }
 
+
+let frameDelay = 5; // 控制动画速度，值越大动画越慢
+let frameCounter = 0;
+
+function loopSecondAnimation() {
+    // 控制帧数更新的速度
+    frameCounter++;
+    if (frameCounter >= frameDelay) {
+        currentFrame2 = (currentFrame2 + 1) % totalFrames2;
+        frameCounter = 0; // 重置计数器
+    }
+
+    drawFrame(currentFrame);
+    requestAnimationFrame(loopSecondAnimation);
+}
+// 启动第二帧序列的循环动画
+loopSecondAnimation();
+
 window.addEventListener('scroll', function() {
     let scrollPositionY = window.scrollY || window.pageYOffset;
     updateCanvasPosition(scrollPositionY);
@@ -74,7 +108,7 @@ window.addEventListener('wheel', (event) => {
             currentFrame = (currentFrame - speedLevel >= 0) ? Math.floor(currentFrame - speedLevel) : 0;
         }
         if (event.deltaY > 0) {
-            currentFrame = (currentFrame + speedLevel < totalFrames) ? Math.floor(currentFrame + speedLevel) : totalFrames - 1;
+            currentFrame = (currentFrame + speedLevel < totalFrames1) ? Math.floor(currentFrame + speedLevel) : totalFrames1 - 1;
         }
 
         // Apply changes
