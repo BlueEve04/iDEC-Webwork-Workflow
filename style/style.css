@@ -5,12 +5,12 @@ body{
     height: 15000px;
 }
 .cvs{
-    top: 800px;
+    top: -300px;
     left: 0%;
     position: absolute;
     transition: transform 0.5s ease;
-    width: 700px;
-    height: 700px;
+    width: 100%;
+    
 }
 h1{
     color: aliceblue;

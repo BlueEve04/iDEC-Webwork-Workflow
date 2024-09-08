@@ -40,14 +40,17 @@ function drawFrame(frameIndex) {
 
 function updateCanvasPosition(scrollPositionY) {
     let transformValue = 'translate(0%, 0%)';
-    if(scrollPositionY >= 200){
+    if(scrollPositionY>=300){
+        transformValue='translate(-28%,43%) scale(0.4)'
+    }
+    if(scrollPositionY >= 800){
         canChangeAnime=true;
     }
     if (scrollPositionY >= 1000) {
-        transformValue = 'translate(120%,85%)';
+        transformValue = 'translate(18%,83%)  scale(0.5)';
     }
     if (scrollPositionY >= 1500) {
-        transformValue = 'translate(0%, 150%)';
+        transformValue = 'translate(-28%, 123%)  scale(0.4)';
     }
     
     canvas_earth.style.transform = transformValue;
