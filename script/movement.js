@@ -47,10 +47,10 @@ function updateCanvasPosition(scrollPositionY) {
         canChangeAnime=true;
     }
     if (scrollPositionY >= 1000) {
-        transformValue = 'translate(18%,83%)  scale(0.5)';
+        transformValue = 'translate(18%,73%)  scale(0.6)';
     }
     if (scrollPositionY >= 1500) {
-        transformValue = 'translate(-28%, 123%)  scale(0.4)';
+        transformValue = 'translate(-28%, 103%)  scale(0.4)';
     }
     
     canvas_earth.style.transform = transformValue;
@@ -74,7 +74,7 @@ function isElementInCenter(elementId) {
 }
 
 
-let frameDelay = 5; // 控制动画速度，值越大动画越慢
+let frameDelay = 8; // 控制动画速度，值越大动画越慢
 let frameCounter = 0;
 
 function loopSecondAnimation() {
